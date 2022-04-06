@@ -19,7 +19,7 @@ public class JwtUtils {
     @Value("${security.jwt.expiration")
     private int expiration;
 
-    public String generateJwtToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
@@ -29,7 +29,7 @@ public class JwtUtils {
                 .compact();
     }
 
-    public boolean validateJwtToken(String jwt) {
+    public boolean validate(String jwt) {
         try {
             Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(jwt);
             return true;
